@@ -9,63 +9,37 @@
  * }
  */
 class Solution {
-
-    public ListNode reverseKGroup(ListNode head, int k) {
-
-        if (head == null || k == 1) return head;
-
-        // Dummy node to make handling head easier
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-
-        // start = previous group's end
-        ListNode start = dummy;
-
-        while (true) {
-            ListNode end = start;
-
-            // \U0001f539 Step 1: Move 'end' k nodes ahead to form a complete group
-            for (int i = 0; i < k && end != null; i++) {
-                end = end.next;
-            }
-
-            // Agar k nodes nahi mile, break (last group left as-is)
-            if (end == null) break;
-
-            // group start and next group start
-            ListNode groupStart = start.next;
-            ListNode nextGroupStart = end.next;
-
-            // \U0001f539 Step 2: Break the group
-            end.next = null;
-
-            // \U0001f539 Step 3: Reverse the group
-            ListNode reversedHead = reverse(groupStart);
-
-            // \U0001f539 Step 4: Connect reversed group
-            start.next = reversedHead;
-
-            // Original groupStart ab reversed group ka tail ban chuka
-            groupStart.next = nextGroupStart;
-
-            // \U0001f539 Step 5: Move start to this group's tail
-            start = groupStart;
+    public ListNode reverse(ListNode head){
+        ListNode curr=head;
+        ListNode prev=null;
+        while(curr!=null){
+            ListNode next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
         }
-
-        return dummy.next;
-    }
-
-    // Standard reverse linked list
-    private ListNode reverse(ListNode head) {
-        ListNode prev = null, curr = head;
-
-        while (curr != null) {
-            ListNode next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-
         return prev;
+    }
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummy=new ListNode(-1);
+        dummy.next=head;
+        ListNode start=dummy;
+        while(true){
+            ListNode end=start;
+            for(int i=0;i<k && end!=null;i++){
+                end=end.next;
+            }
+            if(end==null) break;
+
+            ListNode groupstart=start.next;
+            ListNode nextgroup=end.next;
+            end.next=null;
+            ListNode reversedgroup=reverse(groupstart);
+
+            start.next=reversedgroup;
+            groupstart.next=nextgroup;
+            start=groupstart;
+        }
+        return dummy.next;
     }
 }
