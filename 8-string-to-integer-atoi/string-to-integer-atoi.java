@@ -1,35 +1,38 @@
 class Solution {
-    public int myAtoi(String s) {
-        int n = s.length();
+    static final int INT_MIN_VAL = -2147483648;
+    static final int INT_MAX_VAL = 2147483647;
+
+    // Recursive helper
+    static int helper(String s, int i, long num, int sign) {
+        // Base case: end or non-digit
+        if (i >= s.length() || !Character.isDigit(s.charAt(i)))
+            return (int)(sign * num);
+
+        // Update num
+        num = num * 10 + (s.charAt(i) - '0');
+
+        // Clamp overflow
+        if (sign * num <= INT_MIN_VAL) return INT_MIN_VAL;
+        if (sign * num >= INT_MAX_VAL) return INT_MAX_VAL;
+
+        // Recurse
+        return helper(s, i + 1, num, sign);
+    }
+
+    static int myAtoi(String s) {
         int i = 0;
-        int sign = 1; // default should be +1
-        int result = 0;
 
-        // 1️⃣ Skip leading spaces
-        while (i < n && s.charAt(i) == ' ') {
-            i++;
-        }
+        // Skip whitespaces
+        while (i < s.length() && s.charAt(i) == ' ') i++;
 
-        // 2️⃣ Handle sign (+ or -)
-        if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')) {  // <-- parentheses fixed
+        // Handle sign
+        int sign = 1;
+        if (i < s.length() && (s.charAt(i) == '+' || s.charAt(i) == '-')) {
             sign = (s.charAt(i) == '-') ? -1 : 1;
             i++;
         }
 
-        // 3️⃣ Convert digits to integer
-        while (i < n && Character.isDigit(s.charAt(i))) {
-            int digit = s.charAt(i) - '0';
-
-            // 4️⃣ Check for overflow
-            if (result > (Integer.MAX_VALUE - digit) / 10) {
-                return (sign == 1) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-            }
-
-            result = result * 10 + digit;
-            i++;
-        }
-
-        // 5️⃣ Apply sign
-        return result * sign;
+        // Recursive helper
+        return helper(s, i, 0, sign);
     }
 }
