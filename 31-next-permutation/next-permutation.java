@@ -9,7 +9,7 @@ class Solution {
             swap(nums,start++,end--);
         }
     }
-    public void nextPermutation(int[] nums) {
+    public void nextPermutation(int[] nums){
       int n=nums.length;
       int i=n-2;
       while(i>=0 && nums[i]>=nums[i+1]){
@@ -22,7 +22,7 @@ class Solution {
         }
         swap(nums,i,j);
       }
-      reverse(nums,i+1,n-1);
+       reverse(nums,i+1,n-1);
 
         
     }
