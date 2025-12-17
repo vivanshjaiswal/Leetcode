@@ -1,5 +1,8 @@
 class Solution {
     public void rotate(int[][] matrix) {
+        //This is the only optimal Solution which i can think is to 
+        //find transpose and take down the reverse of the matrix..!!
+        
         //Find transpose of the given Matrix--
         for(int i=0;i<matrix.length;i++){
             for(int j=i;j<matrix[0].length;j++){
