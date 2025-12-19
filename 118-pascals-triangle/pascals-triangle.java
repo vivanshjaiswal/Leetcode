@@ -1,29 +1,23 @@
 class Solution {
-
-    // Function to calculate nCr
-    public static int calculate(int n, int r) {
-        long res = 1;
-        for (int i = 0; i < r; i++) {
-            res = res * (n - i);   // multiply with decreasing n
-            res = res / (i + 1);   // divide by increasing i
-        }
-        return (int) res;
-    }
-
-    // Function to generate Pascal's Triangle
     public List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> ans = new ArrayList<>();
-
-        for (int row = 1; row <= numRows; row++) {
-            List<Integer> tempList = new ArrayList<>();
-
-            for (int col = 1; col <= row; col++) {
-                tempList.add(calculate(row - 1, col - 1));
+        //Basic Approach-
+        List<List<Integer>>result=new ArrayList<>();
+        for(int i=0;i<numRows;i++){
+            List<Integer> row=new ArrayList<>();
+        for(int j=0;j<=i;j++){
+            if(j==0 || j==i){
+                row.add(1);
             }
-
-            ans.add(tempList);
+            else{
+                row.add(
+                    result.get(i-1).get(j-1)+result.get(i-1).get(j)
+                );
+            }
+        
         }
+        result.add(row);}
+        return result;
 
-        return ans;
-    }
+
+      }
 }
