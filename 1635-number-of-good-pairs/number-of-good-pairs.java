@@ -1,15 +1,13 @@
 class Solution {
     public int numIdenticalPairs(int[] nums) {
-        int []freq=new int [101];
-        
         int count=0;
         for(int i=0;i<nums.length;i++){
-            int x=nums[i];
-            count =count+freq[x];
-            freq[x]++;
-
+            for(int j=i+1;j<nums.length;j++){
+                if(nums[i]==nums[j]){
+                    count=count+1;
+                }
+            }
         }
         return count;
-
     }
 }
