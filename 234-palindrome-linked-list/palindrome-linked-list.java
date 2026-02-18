@@ -9,27 +9,43 @@
  * }
  */
 class Solution {
+    public ListNode reverse(ListNode ptr){
+    ListNode curr=ptr;
+    ListNode prev=null;
+    ListNode next=null;
+    while(curr!=null){
+        next=curr.next;
+        curr.next=prev;
+        prev=curr;
+        curr=next;
+    }
+    return prev;
+    }
     public boolean isPalindrome(ListNode head) {
-        //Brute Force Approach
-        ListNode curr= head;
-        ArrayList<Integer>result=new ArrayList<>();
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        ListNode middle = slow;
+        ListNode head1=reverse(middle);
+        ListNode temp1=head1;
+        ListNode temp2=head;
+        while(temp1!=null){
+            if(temp1.val==temp2.val){
+                temp1=temp1.next;
+                temp2=temp2.next;
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
 
-        while(curr!=null){
-        result.add(curr.val);
-        curr=curr.next;
-        }
-       int n=result.size();
-       int left=0;
-       int right=n-1;
-       while(left<=right){
-        if(result.get(left)==result.get(right)) {         
-            left++;
-            right--;
-        }
-        else{
-            return false;
-        }
-       }
-       return true;
+
+
+        
+        
     }
 }
