@@ -3,9 +3,16 @@ class Solution {
         boolean isVisited=false;
         int curr_dist=0;
         int maxDist=0;
+        String num="";
         while(n>0){
-            int bit=n%2;
-            if(bit==1){
+         int remainder=n%2;
+         num=num+remainder;
+        n=n/2;
+        
+        }
+             for(int i=0;i<num.length();i++){
+                 char bit=num.charAt(i);
+            if(bit=='1'){
                 if(isVisited){
                     maxDist=Math.max(maxDist,curr_dist);
                 }
@@ -15,7 +22,7 @@ class Solution {
             else{
                 curr_dist++;
             }
-            n=n/2;
+            
         }
         return maxDist;
     }
